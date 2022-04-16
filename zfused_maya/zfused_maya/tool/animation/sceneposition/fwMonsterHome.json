@@ -1,0 +1,28 @@
+[
+    {
+        "filename":"P:/BKM3/dcc/asset/prop/componentArtwork/rig/preview/maya2020/file/componentArtwork.mb",
+        "matrix":[
+            -0.9995478707902326,
+            0.0,
+            0.03006749072857316,
+            0.0,
+            -0.0,
+            1.0,
+            0.0,
+            0.0,
+            -0.03006749072857316,
+            -0.0,
+            -0.9995478707902326,
+            0.0,
+            -18.204440197648047,
+            6.101,
+            294.95892251114185,
+            1.0
+        ],
+        "namespace":"componentArtwork",
+        "project_id":44,
+        "short_name":"componentArtwork.mb",
+        "task_id":37724,
+        "without_name":"componentArtwork.mb"
+    }
+]

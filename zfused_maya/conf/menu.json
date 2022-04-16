@@ -1,0 +1,84 @@
+{
+    "animation":[
+            {   "name":"开启/关闭屏显信息",
+                "code":"ON/OFF HUD",
+                "title":"开启/关闭屏显信息\nON/OFF HUD(即将弃用)",
+                "cmd":"import zfused_maya.tool.animation.playblast_hud as ph;_v = ph.HUD(ph.get_maya_hud());_v.change_hud_state()",
+                "color":"#81C2D7",
+                "category":"常用"},
+            {   "name"    :"拍屏插件",
+                "code"    :"playblast", 
+                "title"   :"拍屏\nZPlayBlast(即将弃用)",
+                "cmd"     :"from zfused_maya.tool.animation import playblast;ui = playblast.PlaybastTool();ui.show()",
+                "color"   :"#343D46",
+                "category":"拍屏"},
+            {   "name"	  :"场景道具位置更新",
+            	"code"    :"scene_position",
+            	"title"   :"场景道具位置更新 \n scene_position",
+            	"cmd"	  :"from zfused_maya.tool.animation.sceneposition import position_repair;ui =position_repair.position_repair_ui();ui.show()",
+            	"color"   :"#343D46",
+                "category":"工具"},
+            {   "name"	  :"批量导出摄像机",
+                "code"    :"export camera",
+                "title"   :"批量导出摄像机 \n export_camera",
+                "cmd"	  :"from zfused_maya.tool.animation import export_camera;ui =export_camera.ExportCamera();ui.show()",
+                "color"   :"#343D46",
+                "category":"工具"},
+            {   "name"    :"拍屏",
+    			"code"    :"flipbook",
+	            "title"   :"拍屏\nflipbook",
+	            "cmd"     :"from zfused_maya.tool.technology.playblast import playblast_maya;reload(playblast_maya);ui = playblast_maya.Playblast();ui.show()",
+	            "color"   :"#7FFF00",
+	            "category":"拍屏"},
+            {   "name"    :"动画相机",
+                "code"    :"supercam",
+                "title"   :"动画相机\nsupercam",
+                "cmd"     :"from zfused_maya.tool.technology.playblast import playblast_maya;reload(playblast_maya);ui = playblast_maya.Playblast();ui.show()",
+                "color"   :"#7FFF00",
+                "category":"相机"}
+                ],
+    "modeling":
+        [
+            {   "name":"模型分组",
+                "code":"model arrange",
+                "title":"模型分组\nModel Arrange(即将弃用)",
+                "cmd":"import zfused_maya.tool.modeling.modelArrange as modelArrange;ui = modelArrange.Ui();ui.showUi()",
+                "color":"#81C2D6",
+                "category":"分组"}
+        ],
+    "utility":
+        [
+            {   "name":"重载插件",
+                "code":"refresh",
+                "title":"重新登陆\nRefresh And Reload",
+                "cmd":"from zfused_maya.core import init;init.clear()",
+                "color":"#81C2D6",
+                "category":"通用"
+            },
+            {   "name":"项目环节检查",
+                "code":"project step check",
+                "title":"项目环节检查\nproject step check",
+                "cmd":"from zfused_maya.tool.utility.check_manage import check_manage_widget;ui = check_manage_widget.CheckManageWidget();ui.show()",
+                "color":"#dd001b",
+                "category":"工具"}
+        ],
+    "shading":
+        [
+            {   "name":"材质引擎颜色",
+                "code":"shading engine color",
+                "title":"材质引擎颜色\nshading engine color",
+                "cmd":"import zfused_maya.tool.modeling.shadingcolor as shadingcolor;ui = shadingcolor.ShadingColor();ui.show()",
+                "color":"#1C9FF0",
+                "category":"材质引擎"}
+        ],
+    "help":
+        [
+            {   "name":"更新",
+                "code":"update",
+                "title":"更新\nupdate",
+                "cmd":"from zwidgets.updatewidget import updatewidget;from zfused_maya.core import tomaya;ui = updatewidget.UpdateWidget();ui.show()",
+                "color":"#81C2D6",
+                "category":"分组"}
+        ]
+
+}
