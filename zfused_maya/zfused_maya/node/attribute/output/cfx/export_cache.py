@@ -84,7 +84,6 @@ def publish_alembic(*args, **kwargs):
             fixmeshname.fix_deformed_mesh_name("_rendering", _dag)
 
             _dag_dict = {}
-            # _ns = cmds.referenceQuery(_dag,ns = 1)
             _short_ns = cmds.referenceQuery(_dag,ns = 1,shn=True)
             _attr_code = 'asset'
             _publish_file = '{}/{}/{}.{}{}'.format(_publish_path,_attr_code,_short_ns, _file_index,_suffix)
@@ -94,38 +93,37 @@ def publish_alembic(*args, **kwargs):
             if _short_ns == _l_ns:
                 _abc_jobs.append(jober)
 
-                _dag_dict['publish_file'] = _publish_file
-                _dag_dict['cover_file'] = _cover_file
-                _dag_dict['cache_file'] = _cache_file
+                # _dag_dict['publish_file'] = _publish_file
+                # _dag_dict['cover_file'] = _cover_file
+                # _dag_dict['cache_file'] = _cache_file
 
-                # 关联信息
-                _dag_dict['relative_entity_type'] = "asset"
-                _dag_dict['relative_entity_id'] = _asset.get("id")
-                _dag_dict['relative_name_space'] = _asset.get("namespace")
-                _trans.append(_dag_dict)
+                # # 关联信息
+                # _dag_dict['relative_entity_type'] = "asset"
+                # _dag_dict['relative_entity_id'] = _asset.get("id")
+                # _dag_dict['relative_name_space'] = _asset.get("namespace")
+                # _trans.append(_dag_dict)
 
-                _asset['last_cache'] = _cover_file
+                # _asset['last_cache'] = _cover_file
                 
-                _project_step_caches = _asset.get('project_step_caches')
-                if _project_step_caches:
-                    _is_has = False
-                    for _cache in _project_step_caches:
-                        _step = _cache.get('step')
-                        if _step == _task_step:
-                            _is_has = True
-                            _cache['path'] = _cache_file
-                    if not _is_has:
-                        _project_step_caches.append({
-                            "step": _task_step,
-                            "path": _cache_file
-                        })
-                else:
-                    _cache_dict = {}
-                    _cache_dict['step'] = _task_step
-                    _cache_dict['path'] = _cache_file
-                    _project_step_caches.append(_cache_dict)
-                _asset['project_step_caches'] = _project_step_caches
-
+                # _project_step_caches = _asset.get('project_step_caches')
+                # if _project_step_caches:
+                #     _is_has = False
+                #     for _cache in _project_step_caches:
+                #         _step = _cache.get('step')
+                #         if _step == _task_step:
+                #             _is_has = True
+                #             _cache['path'] = _cache_file
+                #     if not _is_has:
+                #         _project_step_caches.append({
+                #             "step": _task_step,
+                #             "path": _cache_file
+                #         })
+                # else:
+                #     _cache_dict = {}
+                #     _cache_dict['step'] = _task_step
+                #     _cache_dict['path'] = _cache_file
+                #     _project_step_caches.append(_cache_dict)
+                # _asset['project_step_caches'] = _project_step_caches
 
     # groom生长面缓存
     _grow_mesh_grps = xgen.get_groom_caching_grp()
@@ -139,10 +137,6 @@ def publish_alembic(*args, **kwargs):
 
             _abc_job = alembiccache.create_frame_cache(_publish_file, _start_frame, _end_frame, grow_mesh_grp, *EXPORTATTR)
             _abc_jobs.append(_abc_job)
-            #
-            # _dag_dict['publish_file'] = _publish_file
-            # _dag_dict['cover_file'] = _cover_file
-            # _dag_dict['cache_file'] = _cache_file
 
     # guide 曲线
     _all_descriptions = xg.descriptions()

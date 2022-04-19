@@ -1,0 +1,351 @@
+{
+    "name": "\u5168\u9762alembic\u6d41\u7a0b\u6d4b\u8bd5",
+    "code": "alembic_pipeline",
+    "variables": {
+        "work_with_no_version": 0,
+        "is_sync_backup_external_files": 0,
+        "test": "test"
+    },
+    "fps": 24,
+    "resolution": [
+        1920,
+        1080
+    ],
+    "production_path": "P:/alembic_pipeline/production",
+    "cache_path": "P:/alembic_pipeline/cache",
+    "project_steps": [
+        {
+            "name": "\u6bdb\u53d1",
+            "code": "fur/xgen",
+            "checks": [
+                {
+                    "name": "\u68c0\u67e5maya\u672a\u77e5\u8282\u70b9",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.unknown_node()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.unknown_node()"
+                },
+                {
+                    "name": "\u68c0\u67e5\u751f\u957f\u9762\u7ec4\u662f\u5426\u5b58\u5728\u4e14\u552f\u4e00",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.groom_caching_grp()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u751f\u957f\u9762\u547d\u540d\u552f\u4e00",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.growmesh_sole()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u63cf\u8ff0\u751f\u957f\u9762\u662f\u5426\u5b58\u5728",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.desc_growmesh()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u751f\u957f\u9762\u7ec4\u4e0b\u662f\u5426\u90fd\u4e3a\u751f\u957f\u9762",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.model_description()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u7a7a\u63cf\u8ff0",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.descriptionGuides()",
+                    "repair_script": ""
+                }
+            ]
+        },
+        {
+            "name": "\u6bdb\u53d1\u7ed1\u5b9a",
+            "code": "fur/rig",
+            "checks": [
+                {
+                    "name": "\u68c0\u67e5\u8f93\u51fa\u66f2\u7ebf\u548c\u5f15\u5bfc\u7ebf\u7684\u94fe\u63a5",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.dyc_guide_link()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u8f93\u51fa\u66f2\u7ebf\u7ec4\u662f\u5426\u5b58\u5728\u4e14\u552f\u4e00",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.out_curve_grp()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u751f\u957f\u9762\u7ec4\u662f\u5426\u5b58\u5728\u4e14\u552f\u4e00",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.groom_caching_grp()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u751f\u957f\u9762\u547d\u540d\u552f\u4e00",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.growmesh_sole()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u63cf\u8ff0\u751f\u957f\u9762\u662f\u5426\u5b58\u5728",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.desc_growmesh()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u7a7a\u63cf\u8ff0",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.descriptionGuides()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u751f\u957f\u9762\u7ec4\u4e0b\u662f\u5426\u90fd\u4e3a\u751f\u957f\u9762",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.model_description()",
+                    "repair_script": ""
+                }
+            ]
+        },
+        {
+            "name": "\u6bdb\u53d1\u89e3\u7b97",
+            "code": "fur/dynmic",
+            "checks": [
+                {
+                    "name": "\u68c0\u67e5\u751f\u957f\u9762\u7ec4\u662f\u5426\u5b58\u5728\u4e14\u552f\u4e00",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.groom_caching_grp()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u751f\u957f\u9762\u547d\u540d\u552f\u4e00",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.growmesh_sole()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u7a7a\u63cf\u8ff0",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.descriptionGuides()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u63cf\u8ff0\u751f\u957f\u9762\u662f\u5426\u5b58\u5728",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.desc_growmesh()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u751f\u957f\u9762\u7ec4\u4e0b\u662f\u5426\u90fd\u4e3a\u751f\u957f\u9762",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.model_description()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u6bdb\u56ca\u66f2\u7ebf\u548c\u5f15\u5bfc\u7ebf\u7684\u94fe\u63a5",
+                    "check_script": "from zfused_maya.node.core import check;reload(check);_check_status,_check_info = check.follicle_guide_link()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u8f93\u51fa\u66f2\u7ebf\u548c\u5f15\u5bfc\u7ebf\u7684\u94fe\u63a5",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.dyc_guide_link()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5\u8f93\u51fa\u66f2\u7ebf\u7ec4\u662f\u5426\u5b58\u5728\u4e14\u552f\u4e00",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info =check.out_curve_grp()",
+                    "repair_script": ""
+                }
+            ]
+        },
+        {
+            "name": "\u6750\u8d28",
+            "code": "material",
+            "checks": [
+                {
+                    "name": "\u68c0\u67e5maya\u591a\u6e32\u67d3\u7ec4",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.multi_rendering_group()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.multi_rendering_group()"
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u672a\u77e5\u8282\u70b9",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.unknown_node()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.unknown_node()"
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u7a7areference\u8282\u70b9",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.null_reference()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.null_refernece()"
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u8d34\u56fe\u8def\u5f84\u9519\u8bef",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.file_node()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u8d34\u56fe\u8def\u5f84\u662f\u5426\u5728\u5236\u4f5c\u76ee\u5f55",
+                    "check_script": "from zfused_maya.node.core import check;reload(check);_check_status,_check_info = check.texture_work_path()",
+                    "repair_script": ""
+                }
+            ]
+        },
+        {
+            "name": "\u52a8\u753b",
+            "code": "animation",
+            "checks": [
+                {
+                    "name": "\u68c0\u67e5maya\u52a8\u753b\u6444\u50cf\u673a\u540d",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.camera_name()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u52a8\u753b\u4e0d\u89c4\u8303key\u5e27",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.useless_key()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u672a\u77e5\u8282\u70b9",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.unknown_node()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.unknown_node()"
+                }
+            ]
+        },
+        {
+            "name": "\u7b80\u6a21",
+            "code": "model/low",
+            "checks": []
+        },
+        {
+            "name": "\u89e3\u7b97",
+            "code": "cfx",
+            "checks": [
+                {
+                    "name": "\u68c0\u67e5maya\u672a\u77e5\u8282\u70b9",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.unknown_node()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.unknown_node()"
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u7a7areference\u8282\u70b9",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.null_reference()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.null_refernece()"
+                }
+            ]
+        },
+        {
+            "name": "\u706f\u5149",
+            "code": "light",
+            "checks": []
+        },
+        {
+            "name": "\u6a21\u578b",
+            "code": "model/preview",
+            "checks": [
+                {
+                    "name": "\u68c0\u67e5maya\u6807\u51c6\u6750\u8d28",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.standard_surface()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u672a\u77e5\u8282\u70b9",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.unknown_node()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.unknown_node()"
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u662f\u5426\u5b58\u5728\u53c2\u8003\u6587\u4ef6",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.reference()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.reference()"
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u6cd5\u7ebf\u662f\u5426\u88ab\u9501",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.normal_lock()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.normal_lock()"
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u901a\u9053\u5c5e\u6027\u503c\u662f\u5426\u51bb\u7ed3",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.check_attr()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u6a21\u578b\u5386\u53f2\u8bb0\u5f55",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.check_history()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u6750\u8d28\u6a21\u578b\u591a\u6750\u8d28\u7403",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.multi_material()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u8d34\u56fe\u8def\u5f84\u9519\u8bef",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.file_node()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u8d34\u56fe\u4e0d\u5728\u7edf\u4e00\u8def\u5f84",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.texture_path()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u8d34\u56fe\u8def\u5f84\u662f\u5426\u5728\u5236\u4f5c\u76ee\u5f55",
+                    "check_script": "from zfused_maya.node.core import check;reload(check);_check_status,_check_info = check.texture_work_path()",
+                    "repair_script": ""
+                }
+            ]
+        },
+        {
+            "name": "\u7ed1\u5b9a-\u9ad8\u7ed1",
+            "code": "rig/high",
+            "checks": [
+                {
+                    "name": "\u68c0\u67e5maya\u52a8\u753b\u4e0d\u89c4\u8303key\u5e27",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.useless_key()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u591a\u4f59\u4fee\u578b\u8282\u70b9",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.defult_asset_node()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u591a\u6e32\u67d3\u7ec4",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.multi_rendering_group()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.multi_rendering_group()"
+                },
+                {
+                    "name": "maya\u68c0\u67e5reference\u6587\u4ef6\u672a\u5728zf\u8bb0\u5f55",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.unrecord_reference_file()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u8d34\u56fe\u8def\u5f84\u9519\u8bef",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.file_node()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u706f\u5149\u6587\u4ef6",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.light()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u663e\u793a\u5c42",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.display_layer()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u52a8\u753b\u5c42",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.animation_layer()",
+                    "repair_script": ""
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u7a7areference\u8282\u70b9",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.null_reference()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.null_refernece()"
+                },
+                {
+                    "name": "\u68c0\u67e5maya\u672a\u77e5\u8282\u70b9",
+                    "check_script": "from zfused_maya.node.core import check;_check_status,_check_info = check.unknown_node()",
+                    "repair_script": "from zfused_maya.node.core import clear;clear.unknown_node()"
+                }
+            ]
+        },
+        {
+            "name": "\u6750\u8d28\u5f00\u53d1",
+            "code": "look",
+            "checks": []
+        },
+        {
+            "name": "\u5408\u6210",
+            "code": "composition",
+            "checks": []
+        },
+        {
+            "name": "\u573a\u666f",
+            "code": "scene",
+            "checks": []
+        },
+        {
+            "name": "\u6a21\u62df\u8bbe\u7f6e",
+            "code": "simSet",
+            "checks": []
+        }
+    ]
+}

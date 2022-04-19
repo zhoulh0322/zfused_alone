@@ -28,8 +28,8 @@ def projects():
 
 
 class Project(object):
-    def __init__(self, name):
-        self._file = os.path.join(LOCAL_DATABASE_PATH, "{}.project".format(name))
+    def __init__(self, code):
+        self._file = os.path.join(LOCAL_DATABASE_PATH, "{}.project".format(code))
         # local database
         with open(self._file, "r") as handle:
             self._data = json.loads(handle.read())
@@ -41,11 +41,15 @@ class Project(object):
         return self._data.get("code")
 
     def project_steps(self):
-        return self._data.get("project_step")
+        return self._data.get("project_steps")
 
     def assets(self):
         return self._data.get("asset")
 
+
+class ProjectStep(object):
+    def __init__(self, project_code, code):
+        pass
 
 
 if __name__ == "__main__":
