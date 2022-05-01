@@ -1,1 +1,0 @@
-from .checkwidget import CheckWidget
