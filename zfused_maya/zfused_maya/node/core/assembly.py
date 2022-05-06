@@ -10,8 +10,9 @@ import logging
 import maya.cmds as cmds
 import pymel.core as pm
 
-import zfused_maya.node as node
+import zfused_api
 
+import zfused_maya.node as node
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +47,7 @@ class Assembly(object):
     def set_active(self, active_string):
         cmds.assembly(self._assembly_name, e = True, active = active_string)
 
+
 def create_assembly_definition(name):
     """ 创建资产集合节点
 
@@ -53,6 +55,7 @@ def create_assembly_definition(name):
     """
     _name = cmds.assembly(name='{}_assemblyDefinition_0001'.format(name))
     return Assembly(_name)
+
 
 def create_assembly_reference(name, reference_file = None):
     """ 创建资产集合节点
@@ -65,6 +68,7 @@ def create_assembly_reference(name, reference_file = None):
         cmds.setAttr('{}.definition'.format(_name), reference_file, type = "string" )
 
     return Assembly(_name)
+
 
 def scene_assemblys():        
     def _get_data(_node):
@@ -110,7 +114,6 @@ def scene_assemblys():
     return _assembly_node
 
 
-
 def fix_to_render():
 
     def is_reference(node):
@@ -130,13 +133,18 @@ def fix_to_render():
         _caches[cmds.listRelatives(_cache, parent = True)[0]] = _file
 
     for _name, _file in _caches.items():
+        # remove unuse aiStandIn node
         _ai_node = "{}_aiStandin".format(_name)
+
+        if cmds.listRelatives(_name, c = True, type = "aiStandIn"):
+            _ai_nodes = cmds.listRelatives(_name, c = True, type = "aiStandIn")
+            for _node in _ai_nodes:
+                if _node != _ai_node:
+                    cmds.delete(_node)
         
         if not cmds.objExists(_ai_node):
-            
             _ass_file = _file.replace(".abc", ".ass").replace("/gpu/", "/ass/")
             if os.path.isfile(_ass_file):
-                # _name = cmds.listRelatives(_create_gpu, parent = True)[0]
                 _ai_node = cmds.createNode("aiStandIn", parent = _name, n = "{}_aiStandin".format(_name))
                 cmds.setAttr("{}.dso".format(_ai_node), _ass_file, type = "string")
                 cmds.setAttr("{}.min".format(_ai_node), -1.0000002, -1, -1.0000005, type = "float3")
@@ -145,7 +153,8 @@ def fix_to_render():
         _gpu_node = cmds.listRelatives(_name, c = True, type = "gpuCache")[0]
         
         if cmds.objExists(_ai_node):
-
+            print(_ai_node)
+            print(_gpu_node)
             cmds.setAttr('%s.ai_self_shadows'%_gpu_node, 0)
             cmds.setAttr('%s.ai_vidr'%_gpu_node, 0)
             cmds.setAttr('%s.ai_visr'%_gpu_node, 0)
@@ -163,9 +172,7 @@ def fix_to_render():
             cmds.setAttr("{}.standin_draw_override".format(_ai_node), 3)
 
 
-
-
-def gpu_to_model(is_sel = True):
+def gpu_to_model(is_sel = True, is_hide_gpu = True):
 
     if is_sel:
         _sels = cmds.ls(sl = True)
@@ -228,11 +235,148 @@ def gpu_to_model(is_sel = True):
         cmds.xform(_instance, m = _mt, ws = True)
         # cmds.parent(_instance, _parent_node)
 
-    _trans = cmds.ls(type = "transform")
+        if is_hide_gpu:
+            cmds.setAttr("{}.visibility".format(_sel), 0)
 
+    _trans = cmds.ls(type = "transform")
     for _tran in _trans:
         if _tran.endswith("_instance_00"):
             cmds.hide(_tran)
+
+
+def import_gpu(name, path):
+    # import gpu
+    # _name = os.path.basename(os.path.splitext(path)[0])
+    _name = "__{}__".format(name)
+    _gpu_node = cmds.createNode('gpuCache', n = "{}_gpu".format(_name))
+    cmds.setAttr('%s.cacheFileName'%_gpu_node, path, type = 'string')
+
+    cmds.setAttr('%s.cmp'%_gpu_node, "|", type = 'string')
+    cmds.setAttr('%s.vis'%_gpu_node, 0)
+    cmds.setAttr('%s.csh'%_gpu_node, 0)
+    cmds.setAttr('%s.rcsh'%_gpu_node, 0)
+    cmds.setAttr('%s.mb'%_gpu_node, 0)
+
+    _parent_name = cmds.listRelatives(_gpu_node, parent = True)[0]
+    cmds.rename(_parent_name, _name)
+    
+    # import ass file
+    # if ass file is exists
+    _ass_file = path.replace(".abc", ".ass").replace("/gpu/", "/ass/")
+    if os.path.isfile(_ass_file):
+        _is_load = cmds.pluginInfo("mtoa", query=True, loaded = True)
+        if not _is_load:
+            cmds.loadPlugin("mtoa")
+        # arnold ass file is exists
+        cmds.setAttr('%s.ai_self_shadows'%_gpu_node, 0)
+        cmds.setAttr('%s.ai_vidr'%_gpu_node, 0)
+        cmds.setAttr('%s.ai_visr'%_gpu_node, 0)
+        cmds.setAttr('%s.ai_vidt'%_gpu_node, 0)
+        cmds.setAttr('%s.ai_vist'%_gpu_node, 0)
+        cmds.setAttr('%s.ai_viv'%_gpu_node, 0)
+        cmds.setAttr('%s.primaryVisibility'%_gpu_node, 0)
+        cmds.setAttr('%s.castsShadows'%_gpu_node, 0)
+        cmds.setAttr('%s.aiOpaque'%_gpu_node, 0)
+
+        _ai_node = cmds.createNode("aiStandIn", parent = _name, n = "{}_aiStandin".format(_name))
+        cmds.setAttr("{}.v".format(_ai_node), k = False)
+        cmds.setAttr("{}.standin_draw_override".format(_ai_node), 3)
+        cmds.setAttr("{}.covm[0]".format(_ai_node), 0, 1, 1)
+        cmds.setAttr("{}.cdvm[0]".format(_ai_node), 0, 1, 1)
+        cmds.setAttr("{}.standin_draw_override".format(_ai_node), 3)
+        cmds.setAttr("{}.dso".format(_ai_node), _ass_file, type = "string")
+        cmds.setAttr("{}.min".format(_ai_node), -1.0000002, -1, -1.0000005, type = "float3")
+        cmds.setAttr("{}.max".format(_ai_node), 1, 1, 1.0000001, type = "float3")
+
+    return _name
+
+def is_instanced_xform(xform):
+    _shapes = cmds.listRelatives(xform, s=True)
+    if not _shapes: 
+       return False
+    for _shape in _shapes:
+        if len (cmds.listRelatives(_shape, ap=True) or []) > 1:
+            return True
+    return False
+
+def optimize_instance():
+    
+    _gpu_caches = cmds.ls(type = "gpuCache", ap = True)
+    
+    if not _gpu_caches:
+        return 
+    # 
+    _instance_group = "__instance_group__"
+    if not cmds.objExists(_instance_group):
+        cmds.createNode("transform", name = _instance_group)
+    cmds.setAttr("__instance_group__.visibility", False)
+    
+    _will_instance = {}
+    for _gpu_cache in _gpu_caches:
+        _gpu_file = cmds.getAttr("{}.cacheFileName".format(_gpu_cache))
+        if _gpu_file not in _will_instance:
+            _will_instance[_gpu_file] = []
+        _transform = cmds.listRelatives(_gpu_cache, p = True)[0]    
+        _will_instance[_gpu_file].append(_transform)
+    
+    for _gpu_file, _transforms in _will_instance.items():
+        if not _transforms:
+            continue
+        # get asset
+        _production_files = zfused_api.zFused.get("production_file_record", filter = {"Path": _gpu_file})
+        if not _production_files:
+            continue
+        _production_file = _production_files[-1]
+        _project_entity = zfused_api.objects.Objects( _production_file.get("ProjectEntityType"), _production_file.get("ProjectEntityId") )
+        _code = _project_entity.code()
+        
+        _is_has = 0
+        # new instance ?
+        _ori_instance = "__{}__".format(_code)
+        if not cmds.objExists(_ori_instance):
+            _ori_instance = import_gpu(_code, _gpu_file)
+            cmds.parent(_ori_instance, _instance_group)
+        else:
+            _gpu_node = cmds.listRelatives(_ori_instance, c = True, type = "gpuCache")[0]
+            _is_has = len(cmds.ls(_gpu_node, ap = True))
+
+        print(_is_has)
+        print(_transforms)
+
+    
+        for _index, _transform in enumerate(_transforms):
+            if _transform == _ori_instance:
+                continue
+            if is_instanced_xform(_transform):
+                continue
+            _name = "{}__gpu__{:>02d}".format(_code, _index + _is_has)
+            _instance = cmds.instance(_ori_instance)[0]
+            cmds.rename(_instance, "zfused_test")
+            _name = cmds.rename("zfused_test", _name)
+            print(_name)
+
+            _parent = None
+            if cmds.listRelatives(_transform, p = True):
+                _parent = cmds.listRelatives(_transform, p = True)[0]
+            _mt = cmds.xform(_transform, q = True, m = True, ws = True)
+            print(_parent)
+            if _parent:
+                cmds.parent(_name, _parent)
+            else:
+                cmds.parent(_name, w = True)
+            cmds.xform(_name, m = _mt, ws = True)
+
+            cmds.delete(_transform)
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -265,6 +409,7 @@ def _test():
     for _assembly_references in _num_dict.values():
         if len(_assembly_references) > 1:
             _copys += _assembly_references
+
     # instance group
     _instance_group = "_instance_grp"
     if not cmds.objExists( _instance_group ):

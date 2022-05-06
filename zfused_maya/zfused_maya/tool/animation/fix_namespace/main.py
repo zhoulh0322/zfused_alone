@@ -5,7 +5,7 @@
 
 import os
 
-from qtpy import QtWidgets, QtCore
+from Qt import QtWidgets, QtCore
 
 import maya.cmds as cmds
 

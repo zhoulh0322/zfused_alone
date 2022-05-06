@@ -30,12 +30,14 @@
 	            "cmd"     :"from zfused_maya.tool.technology.playblast import playblast_maya;reload(playblast_maya);ui = playblast_maya.Playblast();ui.show()",
 	            "color"   :"#7FFF00",
 	            "category":"拍屏"},
-            {   "name"    :"动画相机",
-                "code"    :"supercam",
-                "title"   :"动画相机\nsupercam",
-                "cmd"     :"from zfused_maya.tool.technology.playblast import playblast_maya;reload(playblast_maya);ui = playblast_maya.Playblast();ui.show()",
-                "color"   :"#7FFF00",
-                "category":"相机"}
+            {
+                "name"    :"修复空间命名",
+                "code"    :"fix namespace",
+                "title"   :"修复空间命名 \n fix namespace",
+                "cmd"     :"from zfused_maya.tool.animation.fix_namespace import main;ui = main.Window();ui.show()",
+                "color"   :"#ff00cc",
+                "category":"工具"
+            }
                 ],
     "modeling":
         [
@@ -70,6 +72,25 @@
                 "cmd":"import zfused_maya.tool.modeling.shadingcolor as shadingcolor;ui = shadingcolor.ShadingColor();ui.show()",
                 "color":"#1C9FF0",
                 "category":"材质引擎"}
+        ],
+    "assembly": 
+        [
+            {   "name"    :"gpu转模型",
+                "code"    :"gpu to model",
+                "title"   :"gpu转模型\ngpu to model",
+                "cmd"     :"from zfused_maya.tool.assembly import gpu_to_model;reload(gpu_to_model);ui = gpu_to_model.Window();ui.show()",
+                "color"   :"#343D46",
+                "category":"gpu"
+            }
+        ],
+    "cfx":
+        [
+            {   "name":"输出缓存",
+                "code":"export cache",
+                "title":"输出缓存\nexport cache",
+                "cmd":"from zfused_maya.tool.cfx import export_cache;reload(export_cache);win = export_cache.main.Window();win.show()",
+                "color":"#1C9FF0",
+                "category":"缓存"}
         ],
     "help":
         [

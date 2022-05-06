@@ -46,7 +46,7 @@ def _build_project_menu():
         cmds.deleteUI("zfused_project")
     # project menu
     _project_code = record.current_project_code()
-    if _project_code:
+    if _project_code and _project_code in zfused_api.project.projects():
         _project_name = zfused_api.project.Project(_project_code).name()
     else:
         _project_name = u"暂无项目"

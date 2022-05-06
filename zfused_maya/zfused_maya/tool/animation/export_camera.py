@@ -2,20 +2,66 @@
 # --author-- lanhua.zhou
 
 """ shading color widget """
+from __future__ import print_function
 
 import os
 
 from Qt import QtWidgets, QtCore
 
+from pymel.core import *
 import maya.cmds as cmds
 import maya.mel as mm
 
 from zfused_maya.ui.widgets import window
-import zfused_maya.node.attribute.output.animation.publish_cam as cam
-reload(cam)
 
 
-class ExportCamera(window.Window):
+def get_cam_list(*args):
+	cam_list = []
+	cam_list_all = ls(type = 'camera')
+	for cam in cam_list_all:
+		for cam_keyword in CAM_KEYWORD_LIST:
+			if cam_keyword in str(cam):
+			    cam_list.append(listRelatives(cam, parent = True)[0])
+	return cam_list
+
+def export_cam_ma(export_dir):
+    shot_name = os.path.splitext(os.path.split(sceneName())[1])[0].split('.')[0]
+    export_name = shot_name.replace('_lay', '_cam').replace('_Lay', '_cam')
+    export_path = export_dir + export_name + '.ma'
+    cam = get_cam_list()[0]
+    select(cam, r = True)
+    _cam = exportSelected(export_path, type = 'mayaAscii')
+    if os.path.isfile(_cam):
+        return True
+
+def export_cam_dir(seq_dir, export_dir):
+    file_list = os.listdir(seq_dir)
+    cam_list =[]
+    for filename in file_list:
+        file_path = seq_dir + '/' + filename
+        if os.path.isfile(file_path):
+            if file_path.split('.')[-1] == 'ma':
+                openFile(file_path, force = True)
+                try:
+                    export_cam_ma(export_dir)
+                    cam_list.append(filename)
+
+                except Exception as e:
+                    print(e)
+                    pass
+
+    #0 全部导出成功  1 部分导出成功  2 全部没有导出成功
+    if cam_list:
+        if len(cam_list)==len(file_list):
+            return 0
+        else:
+            return 1
+    else:
+        return 2    
+
+
+
+class ExportCamera(window._Window):
     def __init__(self, parent = None):
         super(ExportCamera, self).__init__(parent)
         self._build()
@@ -42,7 +88,7 @@ class ExportCamera(window.Window):
 
     def _export_line(self):
         _path = self.export_lineedit.text()
-        _state = cam.export_cam_ma(_path)
+        _state = export_cam_ma(_path)
         if _state:
             QtWidgets.QMessageBox.information(self,u"提示",u"相机导出成功！！！！！！！！！")
         else:
@@ -51,7 +97,7 @@ class ExportCamera(window.Window):
     def _seq_line(self):
         _inpath = self.seq_lineedit.text()
         _outpath = self.export_lineedit.text()
-        _state = cam.export_cam_dir(_inpath,_outpath)
+        _state = export_cam_dir(_inpath,_outpath)
         if _state == 0:
             QtWidgets.QMessageBox.information(self,u"提示",u"相机导出成功！！！！！！！！！")
         elif _state == 1:

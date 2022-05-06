@@ -14,10 +14,10 @@ import xgenm as xg
 import xgenm.xgGlobal as xgg
 
 import zfused_api
-from zcore import filefunc, zfile
-from zfused_maya.core import record
-from zfused_maya.node.core import alembiccache
 
+from zcore import filefunc, zfile
+
+from zfused_maya.node.core import alembiccache
 reload(alembiccache)
 
 ATTR = ['uvWrite', 'worldSpace', 'stripNamespaces']

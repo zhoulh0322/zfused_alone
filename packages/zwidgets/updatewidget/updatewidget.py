@@ -37,8 +37,8 @@ def get_script_files():
 
     _script_files = {}
 
-    _outsource_scripts = zfused_api.zFused.get("outsource_scripts")
-    for _script in _outsource_scripts:
+    _alone_scripts = zfused_api.zFused.get("alone_scripts")
+    for _script in _alone_scripts:
         # print(_script)
         _script_path = _script.get("Path")
         _script_md5 = _script.get("MD5")
@@ -81,15 +81,15 @@ class UpdateWidget(QtWidgets.QFrame):
 
         _script_files = {}
 
-        _outsource_scripts = zfused_api.zFused.get("outsource_scripts", fields = ["Name", "MD5", "Path"])
-        _outsource_files_num = len(_outsource_scripts)
+        _alone_scripts = zfused_api.zFused.get("alone_scripts", fields = ["Name", "MD5", "Path"])
+        _outsource_files_num = len(_alone_scripts)
 
         self._title_label.setText(u"获取服务器数据,总计 {} ".format(_outsource_files_num))
         QtWidgets.QApplication.processEvents()
 
         self._progress_widget.setRange(0, _outsource_files_num)
 
-        for _index, _script in enumerate(_outsource_scripts):
+        for _index, _script in enumerate(_alone_scripts):
             
             self._title_label.setText(u"{}/{} 分析是否需要更新 {}".format(_index + 1, _outsource_files_num, _script.get("Name")))
             self._progress_widget.setValue(_index + 1)

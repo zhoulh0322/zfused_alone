@@ -7,9 +7,11 @@ import os
 import shutil
 
 import maya.cmds as cmds
-import  maya.mel as mel
-from zcore import filefunc
+import maya.mel as mel
 import xgenm as xg
+
+from zcore import filefunc
+
 
 
 def publish_file(files, src, dst):

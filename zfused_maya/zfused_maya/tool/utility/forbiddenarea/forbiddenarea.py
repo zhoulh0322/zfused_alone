@@ -6,7 +6,7 @@
 '''
 
 from Qt import QtWidgets, QtGui, QtCore
-from qtpy.QtWidgets import QDialog
+from Qt.QtWidgets import QDialog
 
 
 

@@ -33,6 +33,7 @@ class Window(QtWidgets.QMainWindow):
         self.__drag_position = QtCore.QPoint(0, 0)
 
         self.close_button.clicked.connect(self.close)
+        self.infomation_button.clicked.connect(self._infomation_show)
 
     def set_title_hide(self):
         self.title_widget.hide()
@@ -59,6 +60,9 @@ class Window(QtWidgets.QMainWindow):
 
     def set_help_url(self, url):
         self._help_url = url
+    
+    def _infomation_show(self):
+        webbrowser.open("http://www.unitcg.com/")
 
     def mousePressEvent(self, event):
         self.__is_press = True
@@ -192,6 +196,7 @@ class Window(QtWidgets.QMainWindow):
 
         # title widget
         self.title_widget = QtWidgets.QFrame()
+        self.layout.addWidget(self.title_widget)
         self.title_widget.setObjectName("window_menu_frame")
         self.title_widget.setMinimumHeight(50)
         self.title_widget.setMaximumHeight(50)
@@ -206,7 +211,7 @@ class Window(QtWidgets.QMainWindow):
         self.name_button = QtWidgets.QPushButton()
         self.name_button.setObjectName("window_title_button")
         self.name_button.setFlat(True)
-        self.name_button.setIcon(QtGui.QIcon(resource.get("icons", "zfused.png")))
+        self.name_button.setIcon(QtGui.QIcon(resource.get("icons", "z_title.png")))
         self.name_layout.addWidget(self.name_button)
         # title label
         self.title_label = QtWidgets.QPushButton()
@@ -242,6 +247,7 @@ class Window(QtWidgets.QMainWindow):
 
         # central widget
         self.central_widget = QtWidgets.QFrame()
+        self.layout.addWidget(self.central_widget)
         # self.central_widget.setObjectName("central_widget")
         self.central_layout = QtWidgets.QVBoxLayout(self.central_widget)
         self.central_layout.setSpacing(0)
@@ -249,6 +255,7 @@ class Window(QtWidgets.QMainWindow):
 
         # tail widget
         self.tail_widget = QtWidgets.QFrame()
+        self.layout.addWidget(self.tail_widget)
         self.tail_widget.setHidden(True)
         self.tail_widget.setMinimumHeight(40)
         self.tail_widget.setMaximumHeight(60)
@@ -257,10 +264,18 @@ class Window(QtWidgets.QMainWindow):
         self.tail_layout.setSpacing(0)
         self.tail_layout.setContentsMargins(0,0,0,0)
 
-        self.layout.addWidget(self.title_widget)
-        self.layout.addWidget(self.central_widget)
-        self.layout.addWidget(self.tail_widget)
-
+        self.infomation_widget = QtWidgets.QFrame()
+        self.layout.addWidget(self.infomation_widget)
+        self.infomation_widget.setObjectName("window_menu_frame")
+        self.infomation_widget.setFixedHeight(24)
+        self.infomation_layout = QtWidgets.QHBoxLayout(self.infomation_widget)
+        self.infomation_layout.setSpacing(0)
+        self.infomation_layout.setContentsMargins(10,2,10,2)
+        self.infomation_button = QtWidgets.QPushButton(u"苏州优尼提传媒有限公司(www.unitcg.com) · 2022")
+        self.infomation_button.setObjectName("title_button")
+        self.infomation_button.setIcon(QtGui.QIcon(resource.get("software", "unit-logo-horizontal.png")))
+        self.infomation_layout.addWidget(self.infomation_button)
+        self.infomation_layout.addStretch(True)
 
         #_qss = resource.get("qss", "./window.qss")
         _qss = "{}/window.qss".format(os.path.dirname(__file__))
