@@ -18,7 +18,8 @@ sys.path.insert(0,os.path.dirname(DIRNAME))
 sys.path.insert(0,"{}/packages".format(DIRNAME))
 
 
-from .interface import menubar,company
+#from .interface import menubar,company
+from .interface import menubar
 from zfused_maya.ui.widgets import window
 from zfused_maya.core import record
 
