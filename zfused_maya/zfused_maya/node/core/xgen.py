@@ -517,6 +517,13 @@ def get_outcurve_desc(desc):
         _outcurve = get_outcurve_guide(_guide)
         if _outcurve:
             _outcurves.append(_outcurve[0])
+        else:
+            try:
+                _outcurve = get_guide_override_curve(_guide)
+                if _outcurve:
+                    _outcurves.append(_outcurve[0])
+            except:
+                pass
     return _outcurves
 
 
@@ -547,3 +554,12 @@ def get_growmesh(palette):
             lname = cmds.ls(_mesh, l=1)[0]
             _mesh_list.append(lname)
     return _mesh_list
+
+
+def get_guide_override_curve(_guide):
+    _guide_shape = cmds.listRelatives(_guide, shapes=True, type = 'xgmSplineGuide')
+    _xgm_make_guide = cmds.listConnections(_guide_shape, destination=False, source=True, type='xgmMakeGuide')
+    _xgm_make_guide = list(set(_xgm_make_guide))
+    _override_curve = cmds.listConnections(_xgm_make_guide, destination=False, source=True, type='nurbsCurve')
+    if _override_curve:
+        return _override_curve
